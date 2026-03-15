@@ -219,7 +219,7 @@ export default function Reservations() {
                     value={form.date}
                     onChange={handleChange}
                     min={new Date().toISOString().split("T")[0]}
-                    className="w-full bg-[#161b22] border border-[#30363d] px-4 py-3 text-sm text-[#e6edf3] focus:outline-none focus:border-[#c0c0c0] transition-colors"
+                    className="w-full bg-[#161b22] border border-[#30363d] px-4 py-3 text-sm text-[#e6edf3] focus:outline-none focus:border-[#c0c0c0] transition-colors appearance-none"
                   />
                 </div>
 
