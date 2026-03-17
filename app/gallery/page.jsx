@@ -23,21 +23,22 @@ export default function Gallery() {
     fetchImages();
   }, []);
 
-  // Split images into 3 columns for masonry
-  const col1 = images.filter((_, i) => i % 3 === 0);
-  const col2 = images.filter((_, i) => i % 3 === 1);
-  const col3 = images.filter((_, i) => i % 3 === 2);
+  const col1of2 = images.filter((_, i) => i % 2 === 0);
+  const col2of2 = images.filter((_, i) => i % 2 === 1);
+  const col1of3 = images.filter((_, i) => i % 3 === 0);
+  const col2of3 = images.filter((_, i) => i % 3 === 1);
+  const col3of3 = images.filter((_, i) => i % 3 === 2);
 
   const ImageCard = ({ image }) => (
     <div
-        onClick={() => setSelected(image)}
-        className="relative overflow-hidden cursor-pointer group bg-[#161b22] mb-2 aspect-square"
+      onClick={() => setSelected(image)}
+      className="relative overflow-hidden cursor-pointer group bg-[#161b22] mb-2 aspect-square"
     >
-        <img
+      <img
         src={image.src}
         alt={image.alt}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-75 group-hover:brightness-90"
-        />
+      />
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
         <span className="text-xs tracking-[0.3em] uppercase text-white">View</span>
       </div>
@@ -60,29 +61,48 @@ export default function Gallery() {
         {/* Loading skeleton */}
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {[...Array(8)].map((_, i) => (
+            {[...Array(9)].map((_, i) => (
               <div
                 key={i}
-                className="bg-[#161b22] animate-pulse"
-                style={{ aspectRatio: "1/1" }}
+                className="bg-[#161b22] animate-pulse aspect-square"
               />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 items-start">
-            {/* Column 1 */}
-            <div className="flex flex-col gap-2">
-              {col1.map((image) => <ImageCard key={image.id} image={image} />)}
+          <>
+            {/* Mobile — 2 columns */}
+            <div className="grid grid-cols-2 gap-2 items-start md:hidden">
+              <div className="flex flex-col">
+                {col1of2.map((image) => (
+                  <ImageCard key={image.id} image={image} />
+                ))}
+              </div>
+              <div className="flex flex-col">
+                {col2of2.map((image) => (
+                  <ImageCard key={image.id} image={image} />
+                ))}
+              </div>
             </div>
-            {/* Column 2 */}
-            <div className="flex flex-col gap-2">
-              {col2.map((image) => <ImageCard key={image.id} image={image} />)}
+
+            {/* Desktop — 3 columns */}
+            <div className="hidden md:grid md:grid-cols-3 gap-2 items-start">
+              <div className="flex flex-col">
+                {col1of3.map((image) => (
+                  <ImageCard key={image.id} image={image} />
+                ))}
+              </div>
+              <div className="flex flex-col">
+                {col2of3.map((image) => (
+                  <ImageCard key={image.id} image={image} />
+                ))}
+              </div>
+              <div className="flex flex-col">
+                {col3of3.map((image) => (
+                  <ImageCard key={image.id} image={image} />
+                ))}
+              </div>
             </div>
-            {/* Column 3 */}
-            <div className="flex flex-col gap-2">
-              {col3.map((image) => <ImageCard key={image.id} image={image} />)}
-            </div>
-          </div>
+          </>
         )}
 
       </div>
